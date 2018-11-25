@@ -1,11 +1,20 @@
 package People;
 import Sorting.ISorted;
+import Sorting.QuickSort;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import java.util.Comparator;
 
 public class Library {
+    public Person[] getList() {
+        return list;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
     private Person[] list;
     private int  count;
     private int id=0;
@@ -26,8 +35,14 @@ public class Library {
         count=7;
         this.Sort=Sort;
         Sort();
-        count=0;
     }
+    public Library()
+    {
+        count=0;
+        list=new Person[step];
+        this.Sort=new QuickSort();
+    }
+
     public void add(String Name, String sex, DateTime date)
     {
         if(list.length==count)
@@ -36,6 +51,17 @@ public class Library {
         }
         id++;
         list[count]=new Person(Name,sex,date,id);
+
+        count++;
+    }
+    public void add(Person p)
+    {
+        if(list.length==count)
+        {
+            resize();
+        }
+        id++;
+        list[count]=p;
 
         count++;
     }
