@@ -1,9 +1,8 @@
 package People;
-import java.util.Date;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
-public class Person implements Check {
+
+public class Person{
     public String getName() {
         return name;
     }
@@ -23,6 +22,11 @@ public class Person implements Check {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+    /**
+     *
+     * @param date - joda-time datetime
+     */
     public void setDate(DateTime date) {
         this.date = date;
         if(date==null)
@@ -42,6 +46,12 @@ public class Person implements Check {
         this.id=id;
         setDate(date);
     }
+
+    /**
+     *
+     * @param obj type class Person
+     * @return Boolean
+     */
     public Boolean Checkin(Person obj)
     {
         Boolean ok=true;
@@ -67,5 +77,15 @@ public class Person implements Check {
         return ok;
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", date=" + date +
+                ", age=" + age +
+                ", id=" + id +
+                '}';
+    }
 }
 

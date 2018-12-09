@@ -2,6 +2,7 @@ package UnitTests;
 
 import People.Library;
 import People.Person;
+import Search.SearchByName;
 import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
 import org.junit.Before;
@@ -59,8 +60,7 @@ public class LibraryTest {
     @Test
     public void find() throws Exception {
         add();
-        Person obj=new Person("ab",null,null,null);
-        Person [] p1=l.find(obj);
+        Person [] p1=l.findByName("ab");
         Person [] p2=new Person[1];
         p2[0]=p[0];
         assertEquals(p2,p1);
@@ -68,6 +68,10 @@ public class LibraryTest {
 
     @Test
     public void delete() throws Exception {
+        for(int i=0;i<8;i++)
+        {
+            l.delete(i+1);
+        }
     }
 
 }

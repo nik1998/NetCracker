@@ -5,6 +5,13 @@ import People.Person;
 public class QuickSort implements ISorted {
     Person[] list;
     Comparator<Person> Comp;
+
+    /**
+     *
+     * @param list -array of Person
+     * @param count -count of Person that you
+     * @param Comp - Comparator or lambda expressions
+     */
     public void Sort( Person[] list,int count, Comparator<Person> Comp)
     {
         this.list=list;
@@ -54,4 +61,5 @@ public class QuickSort implements ISorted {
         Sort(l,l,ll);
         Sort(ll+1,ll+1,r);
     }
+
 }

@@ -5,6 +5,12 @@ import People.Person;
 public class BubbleSort implements ISorted  {
     Person[] list;
     Comparator<Person> Comp;
+    /**
+     *
+     * @param list -array of Person
+     * @param count -count of Person that you
+     * @param Comp - Comparator or lambda expressions
+     */
     public void Sort( Person[] list,int count, Comparator<Person> Comp)
     {
         this.list=list;
@@ -32,4 +38,5 @@ public class BubbleSort implements ISorted  {
         }
 
     }
+
 }

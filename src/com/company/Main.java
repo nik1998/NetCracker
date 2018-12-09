@@ -1,5 +1,6 @@
 package com.company;
 import People.Library;
+import People.Person;
 import Sorting.BubbleSort;
 import Sorting.MergeSort;
 import Sorting.QuickSort;
@@ -15,7 +16,7 @@ public class Main {
         String name =sc.next();
         if(t==2)
         {
-            lib.delete(name);
+            lib.delete(0);
         }
         else
         {
@@ -31,11 +32,12 @@ public class Main {
             DateTime datetime =  formatter.parseDateTime(sc.next());
             if(t==0)
             {
-                lib.add(name2,ch,datetime);
+                Person p=new Person(name2,ch,datetime,1);
+                lib.add(p);
             }
             else
             {
-                lib.change(name,name2,ch,datetime);
+                lib.change(0,name2,ch,datetime);
             }
         }
     }

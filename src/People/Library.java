@@ -1,16 +1,22 @@
 package People;
+import Search.ISearch;
+import Search.SearchByName;
 import Sorting.ISorted;
 import Sorting.QuickSort;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.lang.reflect.Field;
+import java.util.logging.*;
 import java.util.Comparator;
 
 public class Library {
+
     public Person[] getList() {
         return list;
     }
-
     public int getCount() {
         return count;
     }
@@ -18,14 +24,16 @@ public class Library {
     private Person[] list;
     private int  count;
     private int id=0;
-    private final int step=10;
-    private ISorted Sort;
+    private final int step=5;
+    private ISorted sort;
     private org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.mm.yyyy");
+    private final static Logger log = Logger.getLogger(Library.class.getName());
     public Library(ISorted Sort)
     {
         count=0;
         list=new Person[step];
-        list[0]=new Person("ab","w",formatter.parseDateTime("12.04.1990"),0);
+        this.sort=Sort;
+        /*list[0]=new Person("ab","w",formatter.parseDateTime("12.04.1990"),0);
         list[1]=new Person("ac","m",formatter.parseDateTime("12.04.1994"),0);
         list[2]=new Person("aad","w",formatter.parseDateTime("12.04.1992"),0);
         list[3]=new Person("aaf","m",formatter.parseDateTime("12.04.1989"),0);
@@ -33,69 +41,138 @@ public class Library {
         list[5]=new Person("sdf","m",formatter.parseDateTime("12.04.1991"),0);
         list[6]=new Person("ert","w",formatter.parseDateTime("12.04.1999"),0);
         count=7;
-        this.Sort=Sort;
-        Sort();
+        Sort();*/
+
     }
     public Library()
     {
         count=0;
         list=new Person[step];
-        this.Sort=new QuickSort();
+        this.sort=new QuickSort();
+        //PrintConf();
+        InitSort();
     }
 
-    public void add(String Name, String sex, DateTime date)
+    public void PrintConf()
     {
-        if(list.length==count)
-        {
-            resize();
+        try {
+            FileWriter writer = new FileWriter("properties.txt");
+            Class c = this.getClass();
+            Field f=c.getDeclaredField("sort");
+            String sortname=f.get(this).getClass().getTypeName();
+            writer.write("sort=");
+            writer.write(sortname);
+            writer.flush();
+            writer.close();
         }
-        id++;
-        list[count]=new Person(Name,sex,date,id);
-
-        count++;
+        catch(Exception ex)
+        {
+            log.log( Level.SEVERE, ex.toString(), ex );
+        }
     }
+    public void InitSort()
+    {
+        try {
+            FileReader reader = new FileReader("properties.txt");
+            Class c = this.getClass();
+            Field f=c.getDeclaredField("sort");
+            //String sortname=f.get(this).toString();
+            String st="";
+            char[] buf=new char [100];
+            reader.read(buf);
+            for(int i=5;i<buf.length;i++)
+            {
+                if(buf[i]!='\0') {
+                    st += buf[i];
+                }
+            }
+            Class c1 = Class.forName(st);
+            ISorted obj = (ISorted)c1.newInstance();
+            f.set(this,obj);
+            reader.close();
+        }
+        catch(Exception ex)
+        {
+            log.log( Level.SEVERE, ex.toString(), ex );
+        }
+    }
+    /**
+     *
+     * @param p type class Person
+     */
     public void add(Person p)
     {
         if(list.length==count)
         {
             resize();
+            log.info("Resize");
         }
         id++;
         list[count]=p;
-
+        log.info("Add " + p.toString());
         count++;
     }
-    public void resize()
+
+    private void resize()
     {
-        Person[] list2=new Person[list.length+step];
-        for (int i=0;i<list.length;i++)
-        {
-            list2[i]=list[i];
+        try {
+            Person[] list2 = new Person[list.length + step];
+            for (int i = 0; i < list.length; i++) {
+                list2[i] = list[i];
+            }
+            list = list2;
         }
-        list=list2;
-    }
-    public void Sort()
-    {
-        Sort.Sort(list, count,(p1,p2)->p1.getName().compareTo(p2.getName()));
+        catch (Exception ex) {
+            log.log( Level.SEVERE, ex.toString(), ex );
+        }
     }
 
-    public void change(String Name, String Name2, String sex, DateTime date)
+    /**
+     * Sort
+     */
+    public void Sort()
     {
+        log.info("Sort");
+        sort.Sort(list, count,(p1,p2)->p1.getName().compareTo(p2.getName()));
+    }
+
+    /**
+     *
+     * @param id - id of object that changes ,type string
+     * @param Name2 -
+     * @param sex
+     * @param date
+     */
+    public void change(Integer id, String Name2, String sex, DateTime date)
+    {
+        log.info("change");
         for (int i=0;i<count;i++)
         {
-            if(list[i].getName().equals(Name)==true)
+            if(list[i].getId().equals(id)==true)
             {
                 list[i]= new Person(Name2,sex,date,list[i].getId());
                 break;
             }
         }
     }
-    public Person[] find(Person obj)
+
+    /**
+     *
+     * @param obj type class Person
+     * @return array of Person
+     */
+    public Person[] findByName(String obj)
     {
-        int k=0;
+        return find(obj,new SearchByName());
+    }
+
+    private Person[] find(Object obj,ISearch search)
+    {
+        Integer k=0;
+        log.info("find");
         for(int i=0;i<count;i++)
         {
-            if(list[i].Checkin(obj))
+            if(search.checkin(list[i],obj))
             {
                 k++;
             }
@@ -104,28 +181,38 @@ public class Library {
         k=0;
         for(int i=0;i<count;i++)
         {
-            if(list[i].Checkin(obj))
+            if(search.checkin(list[i],obj))
             {
                 pf[k]=list[i];
                 k++;
             }
         }
+        log.info("find number "+k.toString());
         return pf;
     }
-    public void delete(String Name)
+
+    /**
+     *
+     * @param id id of object, type Integer
+     */
+    public void delete(Integer id)
     {
-        Boolean ok=false;
-        for (int i=0;i<count-1;i++)
+        log.log(Level.INFO,"delete "+id.toString());
+        try {
+            Boolean ok = false;
+            for (int i = 0; i < count - 1; i++) {
+                if (ok) {
+                    list[i - 1] = list[i];
+                }
+                if (list[i].getId().equals(id) == true) {
+                    ok = true;
+                    count--;
+                }
+            }
+        }
+        catch (Exception ex)
         {
-            if(ok)
-            {
-                list[i-1]=list[i];
-            }
-            if(list[i].getName().equals(Name)==true)
-            {
-                ok =true;
-                count--;
-            }
+            log.log( Level.SEVERE, ex.toString(), ex );
         }
     }
 }
