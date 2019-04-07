@@ -11,18 +11,18 @@ public class MergeSort implements ISorted {
      * @param count -count of Person that you
      * @param Comp - Comparator or lambda expressions
      */
-    public void Sort( Person[] list,int count, Comparator<Person> Comp)
+    public void sort(Person[] list, int count, Comparator<Person> Comp)
     {
         this.list=list;
         this.Comp=Comp;
-        Person[] list2=Sort(0,count);
+        Person[] list2= sort(0,count);
         for(int i=0;i<count;i++)
         {
             this.list[i]=list2[i];
         }
     }
 
-    private Person[] Sort(int l,int r)
+    private Person[] sort(int l, int r)
     {
         if(r-l<=1)
         {
@@ -30,8 +30,8 @@ public class MergeSort implements ISorted {
             mergelist[0]=list[l];
             return mergelist;
         }
-        Person[] left =Sort(l,(l+r)/2);
-        Person[] right =Sort((l+r)/2,r);
+        Person[] left = sort(l,(l+r)/2);
+        Person[] right = sort((l+r)/2,r);
         Person[] ans=new Person[r-l];
         int lim=(l+r)/2-l;
         int lim2=r-(l+r)/2;

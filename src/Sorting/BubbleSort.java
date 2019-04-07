@@ -4,18 +4,18 @@ import People.Person;
 
 public class BubbleSort implements ISorted  {
     Person[] list;
-    Comparator<Person> Comp;
+    Comparator<Person> comp;
     /**
      *
      * @param list -array of Person
      * @param count -count of Person that you
      * @param Comp - Comparator or lambda expressions
      */
-    public void Sort( Person[] list,int count, Comparator<Person> Comp)
+    public void sort(Person[] list, int count, Comparator<Person> Comp)
     {
         this.list=list;
-        this.Comp=Comp;
-        Sort(count);
+        this.comp=Comp;
+        sort(count);
     }
     private void swap(int i,int j)
     {
@@ -24,13 +24,13 @@ public class BubbleSort implements ISorted  {
         list[j]=p;
     }
 
-    private void Sort(int count) {
+    private void sort(int count) {
 
         for(int i=0;i<count;i++)
         {
             for(int j=0;j<count-i-1;j++)
             {
-                if(Comp.compare(list[j],list[j+1])>0)
+                if(comp.compare(list[j],list[j+1])>0)
                 {
                     swap(j,j+1);
                 }

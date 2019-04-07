@@ -12,11 +12,11 @@ public class QuickSort implements ISorted {
      * @param count -count of Person that you
      * @param Comp - Comparator or lambda expressions
      */
-    public void Sort( Person[] list,int count, Comparator<Person> Comp)
+    public void sort(Person[] list, int count, Comparator<Person> Comp)
     {
         this.list=list;
         this.Comp=Comp;
-        Sort(0,0,count);
+        sort(0,0,count);
     }
     private void swap(int i,int j)
     {
@@ -25,7 +25,7 @@ public class QuickSort implements ISorted {
         list[j]=p;
     }
 
-    private void Sort(int in,int l,int r) {
+    private void sort(int in, int l, int r) {
         int rr=r;
         int ll=l;
         if(r-l<=1)
@@ -58,8 +58,8 @@ public class QuickSort implements ISorted {
             }
         }
         swap(in,ll);
-        Sort(l,l,ll);
-        Sort(ll+1,ll+1,r);
+        sort(l,l,ll);
+        sort(ll+1,ll+1,r);
     }
 
 }

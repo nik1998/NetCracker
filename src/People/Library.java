@@ -6,11 +6,9 @@ import Sorting.QuickSort;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Field;
 import java.util.logging.*;
-import java.util.Comparator;
 
 public class Library {
 
@@ -25,14 +23,15 @@ public class Library {
     private int  count;
     private int id=0;
     private final int step=5;
+    @Autoinjectble
     private ISorted sort;
     private org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.mm.yyyy");
     private final static Logger log = Logger.getLogger(Library.class.getName());
-    public Library(ISorted Sort)
+    public Library(ISorted sort)
     {
         count=0;
         list=new Person[step];
-        this.sort=Sort;
+        this.sort=sort;
         /*list[0]=new Person("ab","w",formatter.parseDateTime("12.04.1990"),0);
         list[1]=new Person("ac","m",formatter.parseDateTime("12.04.1994"),0);
         list[2]=new Person("aad","w",formatter.parseDateTime("12.04.1992"),0);
@@ -41,7 +40,7 @@ public class Library {
         list[5]=new Person("sdf","m",formatter.parseDateTime("12.04.1991"),0);
         list[6]=new Person("ert","w",formatter.parseDateTime("12.04.1999"),0);
         count=7;
-        Sort();*/
+        sort();*/
 
     }
     public Library()
@@ -50,10 +49,9 @@ public class Library {
         list=new Person[step];
         this.sort=new QuickSort();
         //PrintConf();
-        InitSort();
     }
 
-    public void PrintConf()
+    private void PrintConf()
     {
         try {
             FileWriter writer = new FileWriter("properties.txt");
@@ -70,32 +68,8 @@ public class Library {
             log.log( Level.SEVERE, ex.toString(), ex );
         }
     }
-    public void InitSort()
-    {
-        try {
-            FileReader reader = new FileReader("properties.txt");
-            Class c = this.getClass();
-            Field f=c.getDeclaredField("sort");
-            //String sortname=f.get(this).toString();
-            String st="";
-            char[] buf=new char [100];
-            reader.read(buf);
-            for(int i=5;i<buf.length;i++)
-            {
-                if(buf[i]!='\0') {
-                    st += buf[i];
-                }
-            }
-            Class c1 = Class.forName(st);
-            ISorted obj = (ISorted)c1.newInstance();
-            f.set(this,obj);
-            reader.close();
-        }
-        catch(Exception ex)
-        {
-            log.log( Level.SEVERE, ex.toString(), ex );
-        }
-    }
+
+
     /**
      *
      * @param p type class Person
@@ -128,12 +102,12 @@ public class Library {
     }
 
     /**
-     * Sort
+     * sort
      */
-    public void Sort()
+    public void sort()
     {
-        log.info("Sort");
-        sort.Sort(list, count,(p1,p2)->p1.getName().compareTo(p2.getName()));
+        log.info("sort");
+        sort.sort(list, count,(p1, p2)->p1.getName().compareTo(p2.getName()));
     }
 
     /**

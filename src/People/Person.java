@@ -3,6 +3,13 @@ package People;
 import org.joda.time.DateTime;
 
 public class Person{
+    private String name;
+    private String sex;
+    private DateTime date;
+    private Integer age;
+    private Integer id;
+
+
     public String getName() {
         return name;
     }
@@ -34,11 +41,7 @@ public class Person{
         else
             age=2018-date.getYear();
     }
-    private String name;
-    private String sex;
-    private DateTime date;
-    private Integer age;
-    private Integer id;
+
     public Person(String name, String sex, DateTime date,Integer id)
     {
         this.name=name;

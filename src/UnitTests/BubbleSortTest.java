@@ -42,7 +42,7 @@ public class BubbleSortTest {
 
     @Test
     public void sort() throws Exception {
-        q.Sort(p,7,(p1,p2)->p1.getName().compareTo(p2.getName()));
+        q.sort(p,7,(p1, p2)->p1.getName().compareTo(p2.getName()));
         int k=0;
         Arrays.sort(p2,(p1, p2)->p1.getName().compareTo(p2.getName()));
         assertEquals(p2,p);
