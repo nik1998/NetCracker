@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import people.Library;
 import people.Person;
+import xml.DomProcessor;
 import xml.JAXBProcessor;
 import xml.StaxStreamProcessor;
 
@@ -72,26 +73,17 @@ public class Main {
             }
         }*/
         Library l = new Library();
-        try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get(xml)))) {
-            XMLStreamReader reader = processor.getReader();
-            org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy.dd.mm");
-            while (processor.doUntil(XMLEvent.START_ELEMENT, "person")) {
-                String name = reader.getAttributeValue(null, "name");
-                Integer id = Integer.parseInt(reader.getAttributeValue(null, "id"));
-                DateTime date = formatter.parseDateTime(reader.getAttributeValue(null, "date"));
-                String sex = reader.getAttributeValue(null, "sex");
-                l.add(new Person(name, sex, date, id));
-            }
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        try (StaxStreamProcessor processor = new StaxStreamProcessor()) {
+            l= processor.parseXml(xml);
         }
         System.out.println(l.toString());
 
-
         JAXBProcessor pr = new JAXBProcessor();
-        Library ll=pr.parseXml(new File(xml));
+        Library ll=pr.parseXml(xml);
         System.out.println(ll.toString());
+
+        DomProcessor proc= new DomProcessor();
+        l= proc.parseXml(xml);
+        System.out.println(l.toString());
     }
 }
