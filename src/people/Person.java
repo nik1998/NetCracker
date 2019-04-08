@@ -1,12 +1,26 @@
-package People;
+package people;
 
 import org.joda.time.DateTime;
+import xml.MyJodaTimeConverter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+@XmlRootElement(name = "person")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Person{
+    @XmlAttribute(name = "name")
     private String name;
+    @XmlAttribute(name = "sex")
     private String sex;
+    @XmlAttribute(name = "date")
+    @XmlJavaTypeAdapter(value = MyJodaTimeConverter.class)
     private DateTime date;
     private Integer age;
+    @XmlAttribute(name = "id")
     private Integer id;
 
 
@@ -42,6 +56,9 @@ public class Person{
             age=2018-date.getYear();
     }
 
+    public Person()
+    {
+    }
     public Person(String name, String sex, DateTime date,Integer id)
     {
         this.name=name;
@@ -49,7 +66,6 @@ public class Person{
         this.id=id;
         setDate(date);
     }
-
     /**
      *
      * @param obj type class Person
@@ -88,7 +104,7 @@ public class Person{
                 ", date=" + date +
                 ", age=" + age +
                 ", id=" + id +
-                '}';
+                '}'+"\n";
     }
 }
 

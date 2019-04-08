@@ -1,7 +1,7 @@
-package UnitTests;
+package unitTests;
 
-import People.Library;
-import People.Inject;
+import people.Library;
+import people.Inject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +16,6 @@ public class LibraryReflection {
     @Test
     public void initSort() {
         Inject.initSort(l);
-        l.Sort();
+        l.sort();
     }
 }

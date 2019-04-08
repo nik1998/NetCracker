@@ -1,4 +1,4 @@
-package Comparators;
+package comparators;
 
 @FunctionalInterface
 public interface IComparator<Person> {

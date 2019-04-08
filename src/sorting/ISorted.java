@@ -1,6 +1,6 @@
-package Sorting;
+package sorting;
 import java.util.Comparator;
-import People.Person;
+import people.Person;
 
 public interface ISorted {
     void sort(Person[] list, int count, Comparator<Person> Comp);

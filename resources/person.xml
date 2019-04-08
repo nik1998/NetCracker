@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<repository>
+    <person id="1" name="Ivan" sex="male" date="1999.2.2">
+    </person>
+    <person id="2" name="Petr" sex="male" date="1999.3.3">
+    </person>
+</repository>

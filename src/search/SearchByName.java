@@ -1,6 +1,6 @@
-package Search;
+package search;
 
-import People.Person;
+import people.Person;
 
 public class SearchByName implements ISearch {
     public Boolean checkin(Person p, Object obj)

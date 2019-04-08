@@ -1,8 +1,7 @@
-package UnitTests;
+package unitTests;
 
-import People.Library;
-import People.Person;
-import Search.SearchByName;
+import people.Library;
+import people.Person;
 import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
 import org.junit.Before;

@@ -1,1 +1,1 @@
-Sorting.ISorted=Sorting.BubbleSort
+sorting.ISorted=sorting.BubbleSort

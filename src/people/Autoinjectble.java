@@ -1,4 +1,4 @@
-package People;
+package people;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

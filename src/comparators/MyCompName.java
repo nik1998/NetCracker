@@ -1,7 +1,6 @@
-package Comparators;
+package comparators;
 
-import People.Person;
-import java.util.Comparator;
+import people.Person;
 
 
 public class MyCompName implements IComparator<Person> {

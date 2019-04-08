@@ -1,7 +1,7 @@
-package UnitTests;
+package unitTests;
 
-import People.Person;
-import Sorting.QuickSort;
+import people.Person;
+import sorting.QuickSort;
 import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
 import org.junit.Before;

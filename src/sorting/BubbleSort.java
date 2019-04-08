@@ -1,6 +1,6 @@
-package Sorting;
+package sorting;
 import java.util.Comparator;
-import People.Person;
+import people.Person;
 
 public class BubbleSort implements ISorted  {
     Person[] list;

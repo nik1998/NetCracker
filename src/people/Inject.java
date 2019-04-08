@@ -1,6 +1,6 @@
-package People;
+package people;
 
-import Sorting.ISorted;
+import sorting.ISorted;
 
 import java.io.FileReader;
 import java.lang.reflect.Field;

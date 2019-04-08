@@ -1,7 +1,7 @@
-package UnitTests;
+package unitTests;
 
-import People.Person;
-import Sorting.BubbleSort;
+import people.Person;
+import sorting.BubbleSort;
 import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
 import org.junit.Before;
@@ -11,8 +11,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class BubbleSortTest {
-
+public class MergeSortTest {
     private Person[] p;
     private Person[] p2;
     private org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.mm.yyyy");
@@ -47,6 +46,5 @@ public class BubbleSortTest {
         Arrays.sort(p2,(p1, p2)->p1.getName().compareTo(p2.getName()));
         assertEquals(p2,p);
     }
-
 
 }

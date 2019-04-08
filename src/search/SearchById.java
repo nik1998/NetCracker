@@ -1,6 +1,6 @@
-package Search;
+package search;
 
-import People.Person;
+import people.Person;
 
 public class SearchById {
     public Boolean checkin(Person p, Object obj)
